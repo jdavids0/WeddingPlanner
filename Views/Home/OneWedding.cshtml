@@ -1,0 +1,32 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+@model Wedding
+
+<div class="container mt-5">
+    <div class="row mb-2">
+        <div class="col-6">
+            <h3>@ViewBag.OneWedding.WedderOne & @ViewBag.OneWedding.WedderTwo's Wedding</h3>
+        </div>
+        <div class="col-4">
+            <a href="/dashboard" class="btn btn-primary btn-outline-dark text-white">Dashboard</a>
+            <a href="/" class="btn btn-primary btn-outline-dark text-white">Logout</a>
+        </div>
+    </div>
+    <h5>Date: @ViewBag.OneWedding.Date.ToString("MMMM dd, yyyy")</h5>
+    <div class="mt-2">
+        <h5>Guests:</h5>
+        <table class="table">
+                    @{
+                        foreach(Guest g in @Model.Attendees)
+                        {
+                            <tr>
+                                <td>@g.User.FirstName @g.User.LastName</td>
+                            </tr>
+                        }
+                    }
+        </table>
+
+    </div>
+</div>

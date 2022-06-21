@@ -1,0 +1,55 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+@model Wedding
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between mb-2">
+        <h3>Welcome to the Wedding Planner</h3>
+        <a href="/" class="btn btn-info btn-dark">Logout</a>
+    </div>
+    <table class="table table-striped">
+        <tr>
+            <th>Wedding</th>
+            <th>Date</th>
+            <th>Guest</th>
+            <th>Action</th>
+        </tr>
+        @{
+            foreach(Wedding w in ViewBag.AllWeddings)
+                {
+                    <tr>
+                        <td><a href="/wedding/@w.WeddingID">@w.WedderOne & @w.WedderTwo</a></td>
+                        <td>@w.Date.ToString("MMM dd yyyy")</td>
+                        <td>@w.Attendees.Count()</td>
+                        <td>
+                            @{
+                                if(@ViewBag.CurrentUser == @w.CreatorID)
+                                { 
+                                <a href="/wedding/delete/@w.WeddingID">Delete</a>
+                                }
+                                else if(@w.Attendees.Any(a => a.UserID == ViewBag.CurrentUser))
+                                {
+                                    <a href="/wedding/unrsvp/@w.WeddingID" >Un-RSVP</a>
+                                    
+                                }
+                                else {
+                                    <a href="/wedding/rsvp/@w.WeddingID">RSVP</a>
+                                }
+                            }
+                            
+                        </td>
+                    </tr>
+                }
+        }
+        
+        
+        
+
+
+    </table>
+    <div class="d-flex justify-content-end">
+        <a href="/wedding" class="btn btn-primary btn-outline-dark text-white">New Wedding</a>
+    </div>
+</div>
